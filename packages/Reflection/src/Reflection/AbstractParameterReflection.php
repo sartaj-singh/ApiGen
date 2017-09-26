@@ -33,18 +33,8 @@ abstract class AbstractParameterReflection implements AbstractParameterReflectio
 
     public function getTypeHint(): string
     {
-        $types = (string) $this->betterParameterReflection->getTypeHint();
-        $types = $this->removeClassPreSlashes($types);
-        if ($types) {
-            return $types;
-        }
-
-        $annotation = $this->getAnnotation();
-        if ($annotation) {
-            return (string) $annotation->getType();
-        }
-
-        return '';
+        $types = $this->betterParameterReflection->getDocBlockTypes();
+        return implode('|', $types);
     }
 
     public function isDefaultValueAvailable(): bool
